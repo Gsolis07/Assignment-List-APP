@@ -34,11 +34,10 @@
 
         <h2 class="text-center my-3">Assignments</h2>
 
-        <div id="assignments"></div>
     </div>
 
     <div class="accordion container-sm" id="accordionExample">
-        <div class="accordion-item">
+        <div class="accordion-item metal-arts">
             <h2 class="accordion-header">
                 <button 
                     class="accordion-button" 
@@ -51,12 +50,13 @@
                 </button>
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    This is the first item's accordion body.
+                <div class="metal-arts-accordion-body">
+                    <!-- This is where i want the assignments where the course Metal Arts was selected -->
+                    
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item topics-in-cs">
             <h2 class="accordion-header">
                 <button 
                     class="accordion-button collapsed" 
@@ -69,12 +69,13 @@
                 </button>
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                   This is the second item's accordion body.
+                <div class="topics-in-cs-accordion-body">
+                   <!-- This is where i want the assignments where the course Topics in CS was selected -->
+                   <div class="topics-in-cs-list-group"></div>
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item plc">
             <h2 class="accordion-header">
                 <button 
                     class="accordion-button collapsed" 
@@ -87,12 +88,13 @@
                 </button>
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                   This is the third item's accordion body.
+                <div class="plc-accordion-body">
+                   <!-- This is where i want the assignments where the course PLC was selected -->
+                   <div class="plc-list-group"></div>
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
+        <div class="accordion-item graphic-design">
             <h2 class="accordion-header">
                 <button 
                     class="accordion-button collapsed" 
@@ -105,8 +107,9 @@
                 </button>
             </h2>
             <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    This is the fourth item's accordion body.
+                <div class="graphic-design-accordion-body">
+                    <!-- This is where i want the assignments where the course Graphic Design was selected -->
+                    <div class="graphic-design-list-group"></div>
                 </div>
             </div>
         </div>
@@ -170,8 +173,9 @@
                             <button
                                 type="submit" 
                                 id="add" 
-                                class="btn btn-success"
-                            >
+                                class="btn btn-primary"
+                                data-bs-dismiss
+                                >
                                 Add
                             </button>
                         </div>

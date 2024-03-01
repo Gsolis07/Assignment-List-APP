@@ -18,8 +18,3 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
-.accordian {
-    max-width: 100px;
-    margin: 0 auto;
-}

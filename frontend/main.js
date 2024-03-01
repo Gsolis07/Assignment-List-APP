@@ -27,7 +27,7 @@ document.getElementById('form-add').addEventListener('submit', (e) => {
     if (!titleInput.value) {
         document.getElementById('msg').innerHTML = 'Assignment cannot be blank';
     } else {
-      addTodo(titleInput.value, courseInput.value, descInput.value, dueDateInput.value);
+      addAssignment(titleInput.value, courseInput.value, descInput.value, dueDateInput.value);
   
       // close modal
       let add = document.getElementById('add');
@@ -39,7 +39,7 @@ document.getElementById('form-add').addEventListener('submit', (e) => {
     }
 });
 
-let addTodo = (title, course, description, dueDate) => {
+let addAssignment = (title, course, description, dueDate) => {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 201) {
@@ -53,29 +53,122 @@ let addTodo = (title, course, description, dueDate) => {
     xhr.send(JSON.stringify({ title, course, description, dueDate }));
 };
 
-let refreshTodos = () => {
-    assignments.innerHTML = '';
-    data
-      .sort((a, b) => b.id - a.id)
-      .map((x) => {
-        return (assignments.innerHTML += `
-        <div id="assignment-${x.id}" class="assignment-entry">
-          <div class="assignment-header">
-            <span class="fw-bold fs-4">${x.title}</span>
-            <span class="course">${x.course}</span>
-            <pre class="text-secondary ps-3">${x.description}</pre>
-            <span class="due-date">${x.dueDate}</span>
-          </div>
-        
-        <div class="options">
-          <i onClick="tryEditAssignment(${x.id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
-          <i onClick="deleteAssignment(${x.id})" class="fas fa-trash-alt"></i>
-        </div>
-      </div>
-    `);
-    });
-    resetForm();
+let refreshAssignments = () => {
+  // Clear the content of each accordion body
+  document.querySelectorAll('.accordion-body').forEach(body => {
+      body.innerHTML = '';
+  });
+
+  // Group assignments by course
+  let assignmentsByCourse = {};
+  data.forEach(assignment => {
+      if (!assignmentsByCourse.hasOwnProperty(assignment.course)) {
+          assignmentsByCourse[assignment.course] = [];
+      }
+      assignmentsByCourse[assignment.course].push(assignment);
+  });
+
+  // Iterate over assignments by course and populate the accordion bodies
+  for (let course in assignmentsByCourse) {
+      let accordionBody = document.querySelector(`.${course}-accordion-body`);
+
+      // Add assignments to the corresponding accordion body
+      assignmentsByCourse[course].forEach(assignment => {
+          let assignmentElement = document.createElement('div');
+          assignmentElement.classList.add(`${course}-list-group`);
+          assignmentElement.innerHTML = `
+              <a href="#" class="list-group-item list-group-item-action">
+                  <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">${assignment.title}</h5>
+                      <small>${assignment.dueDate}</small>
+                  </div>
+                  <p class="mb-1">${assignment.description}</p>
+              </a>
+          `;
+          accordionBody.appendChild(assignmentElement);
+      });
+  }
+
+  resetForm(); // Reset form after adding
 };
+
+
+
+
+
+
+// let refreshAssignments = () => {
+//   assignments.innerHTML = '';
+//     data
+//       .sort((a, b) => b.id - a.id)
+//       .map((x) => {
+//         return (assignments.innerHTML += `
+//           <div id="assignment-${x.id}" class="assignment-entry">
+//             <div class="assignment-header">
+//               <span class="fw-bold fs-4">${x.title}</span>
+//               <span class="course">${x.course}</span>
+//               <pre class="text-secondary ps-3">${x.description}</pre>
+//               <span class="due-date">${x.dueDate}</span>
+//             </div>
+        
+//             <div class="options">
+//               <i onClick="tryEditAssignment(${x.id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
+//               <i onClick="deleteAssignment(${x.id})" class="fas fa-trash-alt"></i>
+//             </div>
+//           </div>
+//     `);
+//     });
+//     resetForm();
+// };
+
+
+// // Refresh assignments function
+// let refreshAssignments = () => {
+//   // Clear accordion bodies
+//   document.querySelectorAll('.accordion-collapse').forEach((collapse) => {
+//       collapse.innerHTML = '';
+//   });
+
+//   // Group assignments by course
+//   for (let course in assignmentsByCourse) {
+//       let accordionBody = document.querySelector(`.${course}-accordion-body`);
+//       let assignmentListGroup = document.createElement('div');
+//       assignmentListGroup.classList.add(`${course}-list-group`);
+
+//       // Add assignments to list group
+//       assignmentsByCourse[course].forEach(assignment => {
+//           let assignmentItem = document.createElement('a');
+//           assignmentItem.classList.add('list-group-item', 'list-group-item-action');
+//           assignmentItem.href = '#';
+//           assignmentItem.innerHTML = `
+//               <div class="d-flex w-100 justify-content-between">
+//                   <h5 class="mb-1">${assignment.title}</h5>
+//                   <small>${assignment.dueDate}</small>
+//               </div>
+//               <p class="mb-1">${assignment.description}</p>
+//           `;
+//           // Append assignment item to list group
+//           assignmentListGroup.appendChild(assignmentItem);
+//       });
+
+//       // Append list group to accordion body
+//       accordionBody.appendChild(assignmentListGroup);
+//   }
+
+//   resetForm(); // Reset form after adding
+// };
+
+
+
+
+
+
+
+
+
+
+
+
 
 let tryEditAssignment = (id) => {
     const assignment = data.find((x) => x.id === id);
