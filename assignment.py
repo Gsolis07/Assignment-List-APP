@@ -16,15 +16,15 @@ async def add_assignment(assignment: AssignmentRequest) -> dict:
     newAssignment = Assignment(id=max_id, title=assignment.title, description=assignment.description, course=assignment.course, dueDate=assignment.dueDate)
     assignment_list.append(newAssignment)
     json_compatible_item_data = newAssignment.model_dump()
-    return JSONResponse(json_compatible_item_data, status=status.HTTP_201_CREATED)
+    return JSONResponse(content=json_compatible_item_data, status_code=status.HTTP_201_CREATED)
 
-@assignment_router.get("/todos")
+@assignment_router.get("/assignments")
 async def get_assignments() -> dict:
     json_compatible_item_data = jsonable_encoder(assignment_list)
     return JSONResponse(content=json_compatible_item_data)
 
 
-@assignment_router.get("/assignmentss/{id}")
+@assignment_router.get("/assignments/{id}")
 async def get_assignment_by_id(id: int = Path(..., title="default")) -> dict:
     for assignment in assignment_list:
         if assignment.id == id:
@@ -34,7 +34,7 @@ async def get_assignment_by_id(id: int = Path(..., title="default")) -> dict:
         detail=f"The assignment with ID={id} is not found.",
     )
         
-@assignment_router.get("/assignmentss/{id}")
+@assignment_router.get("/assignments/{id}")
 async def get_assignment_by_course(course: str = Path(..., title="default")) -> dict:
     for assignment in assignment_list:
         if assignment.course == course:
@@ -45,7 +45,7 @@ async def get_assignment_by_course(course: str = Path(..., title="default")) -> 
     )
 
 
-@assignment_router.put("/todos/{id}")
+@assignment_router.put("/assignments/{id}")
 async def update_assignment(assignment: AssignmentRequest, id: int) -> dict:
     for x in assignment_list:
         if x.id == id:
