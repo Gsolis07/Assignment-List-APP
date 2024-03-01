@@ -27,7 +27,7 @@ document.getElementById('form-add').addEventListener('submit', (e) => {
     if (!titleInput.value) {
         document.getElementById('msg').innerHTML = 'Assignment cannot be blank';
     } else {
-      addTodo(titleInput.value, courseInput.value, descInput.value, dueDateInput.value);
+      addAssignment(titleInput.value, courseInput.value, descInput.value, dueDateInput.value);
   
       // close modal
       let add = document.getElementById('add');
@@ -39,7 +39,7 @@ document.getElementById('form-add').addEventListener('submit', (e) => {
     }
 });
 
-let addTodo = (title, course, description, dueDate) => {
+let addAssignment = (title, course, description, dueDate) => {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 201) {
@@ -53,7 +53,7 @@ let addTodo = (title, course, description, dueDate) => {
     xhr.send(JSON.stringify({ title, course, description, dueDate }));
 };
 
-let refreshTodos = () => {
+let refreshAssignments = () => {
     assignments.innerHTML = '';
     data
       .sort((a, b) => b.id - a.id)
