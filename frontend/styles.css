@@ -2,24 +2,11 @@ body {
     background-color: #93c8f0;
 }
 
-.app {
-    height: 100%;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    background-color: dimgray;
-    border: 0.25rem solid rgb(0, 0, 0);
-    border-radius: 0.5rem;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
 #addNew {
     display: flex;
     justify-content: space-between;
 }
 
-.accordian {
-    max-width: 100px;
-    margin: 0 auto;
+.accordion-body{
+    background-color: #979797;
 }

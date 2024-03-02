@@ -54,28 +54,36 @@ let addAssignment = (title, course, description, dueDate) => {
 };
 
 let refreshAssignments = () => {
-    assignments.innerHTML = '';
-    data
-      .sort((a, b) => b.id - a.id)
-      .map((x) => {
-        return (assignments.innerHTML += `
-        <div id="assignment-${x.id}" class="assignment-entry">
-          <div class="assignment-header">
-            <span class="fw-bold fs-4">${x.title}</span>
-            <span class="course">${x.course}</span>
-            <pre class="text-secondary ps-3">${x.description}</pre>
-            <span class="due-date">${x.dueDate}</span>
-          </div>
-        
-        <div class="options">
-          <i onClick="tryEditAssignment(${x.id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
-          <i onClick="deleteAssignment(${x.id})" class="fas fa-trash-alt"></i>
-        </div>
-      </div>
-    `);
-    });
-    resetForm();
+  // Clear existing content in accordion bodies
+  document.querySelectorAll('.list-group').forEach(group => {
+      group.innerHTML = '';
+  });
+
+  // Populate accordion bodies with assignments
+  data.forEach(assignment => {
+      let course = assignment.course.toLowerCase().replace(/\s+/g, '-');
+      let accordionBody = document.getElementById(`${course}-assignments`);
+
+      if (accordionBody) {
+          accordionBody.innerHTML += `
+              <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                      <h5 class="mb-1">${assignment.title}</h5>
+                      <small>${assignment.dueDate}</small>
+                  </div>
+                  <p class="mb-1">${assignment.description}</p>
+
+                  <span class="options">
+                    <i onClick="tryEditAssignment(${assignment.id})" data-bs-toggle="modal" data-bs-target="#modal-edit" class="fas fa-edit"></i>
+                    <i onClick="deleteAssignment(${assignment.id})" class="fas fa-trash-alt"></i>
+              </a>
+          `;
+      }
+  });
+
+  resetForm();
 };
+
 
 let tryEditAssignment = (id) => {
     const assignment = data.find((x) => x.id === id);
