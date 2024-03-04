@@ -10,3 +10,8 @@ body {
 .accordion-body{
     background-color: #979797;
 }
+
+.list-group {
+    --bs-list-group-bg: #c1c6bb;
+    --bs-list-group-action-hover-bg: #87b9eb;
+}
